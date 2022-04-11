@@ -7,13 +7,13 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from .forms import ProProjectForm, ProfileForm, UpdateProfileForm
-from awwwardsapp.models import Profile
+from awardproject.models import Profile
 from rest_framework import serializers
 from rest_framework.views import APIView
 from .permissions import IsAdminOrReadOnly
-from awwwardsapp import serializer
+from awardproject import serializer
 from django.http import HttpResponseRedirect, Http404
-from .serializer import ProfileSerializer, ProjectSerializer
+from .serializer import ProfileSerializer, ProjectSerializer,UserSerializer
 from rest_framework.response import Response
 
 
@@ -158,9 +158,37 @@ class ProjectList(APIView):
         serializer = ProjectSerializer(projects,many=True)
         return Response(serializer.data)
 
+    def post(self, request, format=None):
+        serializers = ProjectSerializer(post,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class ProfileList(APIView):
     permission_classes = (IsAdminOrReadOnly,)
     def get(self,request,format=None):
         profiles = Profile.objects.all()
         serializer = ProfileSerializer(profiles,many=True)
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializers = ProfileSerializer(post,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserList(APIView):
+    permission_classes = (IsAdminOrReadOnly,)
+    def get(self,request,format=None):
+        user= User.objects.all()
+        serializer = UserSerializer(user,many=True)
+        return Response(serializer.data)
+
+    def post(self, request, format=None):
+        serializers = UserSerializer(post,data=request.data)
+        if serializers.is_valid():
+            serializers.save()
+            return Response(serializers.data, status=status.HTTP_201_CREATED)
+        return Response(serializers.errors, status=status.HTTP_400_BAD_REQUEST)

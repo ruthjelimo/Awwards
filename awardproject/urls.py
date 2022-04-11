@@ -16,4 +16,5 @@ urlpatterns = [
     path("rate/<int:id>",views.rate, name='rate'),
     path('api/projects/', views.ProjectList.as_view()),
     path('api/profiles/',views.ProfileList.as_view()),
+    path('api/user/',views.UserList.as_view()),
 ]
