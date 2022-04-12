@@ -14,7 +14,7 @@ Awwards-app
  CTRL+ALT+T to open the terminal 
  Now git clone:
 https://github.com/ruthjelimo/Awwards.git
- Cd Instagram
+ Cd Awwards
  Use vscode to open it 
 
  ## Technologies Used
